@@ -2,7 +2,7 @@
 
 ![image](https://github.com/t-cool/clj-article/blob/master/01-Command_line_scripting_with_ClojureScript/image.jpeg)
 
-ClojureScriptコミュニティによる開発のおかげで、コマンドライン・スクリプトをClojureで書くのが楽しくなってきました。ClojureScriptの中心チームでlumoを開発している[anmonteiro](https://github.com/anmonteiro)さんには、心から敬意を表します。
+ClojureScriptコミュニティによる開発のおかげで、コマンドライン・スクリプトをClojureで書くのが楽しくなってきました。ClojureScriptの中心チームとlumoを開発している[anmonteiro](https://github.com/anmonteiro)さんには、心から敬意を表します。
 
 Clojureは、データを処理するための短いスクリプトを書くのに良い言語だと思います。操作用の関数やイミュータブルな構造が言語に組み込まれているので、参照性やdeep-cloningについて心配する必要がありません。
 
@@ -28,8 +28,8 @@ Hello World!
 ;; 次のプログラムでは、https://randomuser.meで生成されたjsonのペイロードをパーズして、
 ;; データの一部を抽出します。予め、次のコマンドでデータをダウンロードしてください。
 ;; $ wget 'https://randomuser.me/api/?results=10' -O randomUsers.json
-;; 注: シングルクォートをお忘れなく
 
+;; 注: シングルクォートをお忘れなく
 (require
   '[clojure.string :refer [capitalize]]   ;; Clojureのライブラリをrequireします
   '[fs :refer [writeFileSync]]            ;; Node.JSのfilesystem関連のモジュールをrequireします
@@ -148,7 +148,7 @@ $ npm start 12 ## 12人のユーザを取得して、randomUsers.ednを出力し
 ## REPLでの開発
 
 Clojureを経験するのに、REPLを元にしたインタラクティブな開発なしには終われません。
-`package.json`に次の行を足してください。
+`package.json`の`scripts`セクションに次の行を足してください。
 
 ```
 "repl": "lumo -c src -i src/my_tool/core.cljs -n 5777 -r"
