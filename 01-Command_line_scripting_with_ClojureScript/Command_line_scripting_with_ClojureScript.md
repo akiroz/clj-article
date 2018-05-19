@@ -1,4 +1,4 @@
-# ClojureScriptでコマンドライン・スクリプティング
+# ClojureScriptでコマンドラインスクリプトを書いてみよう
 
 ![image](https://github.com/t-cool/clj-article/blob/master/01-Command_line_scripting_with_ClojureScript/image.jpeg)
 
