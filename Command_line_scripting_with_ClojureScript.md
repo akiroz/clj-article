@@ -1,6 +1,6 @@
 # Command line scripting with ClojureScript
 
-ClojureScriptコミュニケーションによる開発のおかげで、コマンドライン・スクリプトをClojureで書くのが楽しくなってきています。ClojureScriptの中心チームでlumoを開発している[anmonteiro](https://github.com/anmonteiro)さんには、心から敬意を表します。
+ClojureScriptコミュニケーションによる開発のおかげで、コマンドライン・スクリプトをClojureで書くのが楽しくなってきました。ClojureScriptの中心チームでlumoを開発している[anmonteiro](https://github.com/anmonteiro)さんには、心から敬意を表します。
 
 Clojureは、データを処理するために使い捨てのスクリプトを書くのに良い言語だと思います。というのも、組み込みで操作用の関数とイミュータブルな構造をもっていて、参照性やdeep-cloningについて心配する必要がないからです。
 
@@ -52,17 +52,20 @@ Hello World!
     (pr-str (mapv parse-user results))))
 ```
 
-ご覧の通り、このrequire関数は、JavaScriptのrequire関数と同じように動作します。JavaScriptのモジュールを取り込み、次のようにすることと同じように動きます。
+ご覧の通り、このrequire関数は、JSのrequire関数と同じように動作します。次のようにすることと同じように動きます。
 
 ```
 const { writeFileSync } = require('fs');
 const inputJson = require('./randomUsers.json');
 ```
 
-It also works with modules inside the node_modules folder installed using npm in the same directory (as of lumo 1.8.0). Unfortunately, there isn’t an easy way to manage dependencies on the Clojure side just yet so for now we are stuck with manually handling JAR files where Clojure libraries are usually packaged. (Take a look at the lumo wiki for more details.)
+npmを用いてインストールされるnode_modulesにあるモジュールとも上手く動作します(現状lumo 1.8.0において)。
+残念ながら、Clojure側での依存関係を管理する簡単な方法はありません。現状では、Clojureのライブラリが収められるjarファイルを手動で管理する必要があります。詳しくは、lumoのWikiも参考にしてください。
 
 ## NPMとの連携
-For slightly larger projects you’d probably want to have a proper package.json with some dependencies on NPM. You could also install lumo on a per-project basis if you don’t want to install it globally or wish to publish the package elsewhere. Here’s a sample project that works like the above example but fetches JSON from https://randomuser.me using the request library from NPM and splits the code into 2 Clojure files with proper name-spacing:
+For slightly larger projects you’d probably want to have a proper package.json with some dependencies on NPM. 
+You could also install lumo on a per-project basis if you don’t want to install it globally or wish to publish the package elsewhere. 
+Here’s a sample project that works like the above example but fetches JSON from https://randomuser.me using the request library from NPM and splits the code into 2 Clojure files with proper name-spacing:
 
 ```
 my-tool
@@ -135,7 +138,8 @@ package.json:
 }
 ```
 
-The -c flag tells lumo where your source files are and the -m flag specifies which namespace your -main function is in. You can run this tool using the usual npm procedures:
+The -c flag tells lumo where your source files are and the -m flag specifies which namespace your -main function is in. 
+You can run this tool using the usual npm procedures:
 
 ```
 $ npm install
@@ -143,13 +147,15 @@ $ npm start 12 ## fetches 12 users and outputs randomUsers.edn
 ```
 
 ## REPLでの開発
-Of course, no Clojure experience would be complete without interactive REPL-based development. Add the following line into the scripts section of your package.json file:
+Of course, no Clojure experience would be complete without interactive REPL-based development. 
+Add the following line into the scripts section of your package.json file:
 
 ```
 "repl": "lumo -c src -i src/my_tool/core.cljs -n 5777 -r"
 ```
 
-The -i flag initializes the REPL with our entry point core.cljs, the -n flag starts a socket REPL on port 5777 for editor integration and finally the -r flag start a REPL in the terminal. With this you could execute arbitrary code in your runtime without loosing state:
+The -i flag initializes the REPL with our entry point core.cljs, the -n flag starts a socket REPL on port 5777 for editor integration and finally the -r flag start a REPL in the terminal. 
+With this you could execute arbitrary code in your runtime without loosing state:
 
 ```
 $ npm run repl
@@ -164,7 +170,8 @@ my-tool.core=> (user/parse {:name {:first "john" :last "smith"}})
 ```
 
 ## さいごに
-While there are still a few rough edges with the current tooling, I think this is the time where writing CLI scripts in Clojure starts to become a viable option and a nice alternative to JS.
+While there are still a few rough edges with the current tooling, 
+I think this is the time where writing CLI scripts in Clojure starts to become a viable option and a nice alternative to JS.
 
 Lumo’s startup time is blazing fast compared to any clojur-y things running on the JVM so it’s a breath of fresh air.
 
