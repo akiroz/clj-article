@@ -133,7 +133,7 @@ package.json:
   }
 }
 ```
--cのフラグは、lumoに、あなたのソースコードがどこにあるのかを知らせます。-mフラグは、あなたの-main関数がどの名詞空間にあるのかを特定します。
+-cフラグは、lumoに、あなたのソースコードがどこにあるのかを知らせます。-mフラグは、あなたの-main関数がどの名詞空間にあるのかを特定します。
 このツールを、npmを使って起動することができます。
 
 ```
@@ -142,6 +142,7 @@ $ npm start 12 ## fetches 12 users and outputs randomUsers.edn
 ```
 
 ## REPLでの開発
+
 Of course, no Clojure experience would be complete without interactive REPL-based development. 
 Add the following line into the scripts section of your package.json file:
 
