@@ -1,0 +1,12 @@
+{
+  "name": "my-tool",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "lumo -c src -m my-tool.core",
+    "repl": "lumo -c src -i src/my_tool/core.cljs -n 5777 -r"
+  },
+  "dependencies": {
+    "lumo-cljs": "^1.8.0",
+    "request": "^2.85.0"
+  }
+}
