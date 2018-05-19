@@ -1,6 +1,6 @@
 # Command line scripting with ClojureScript
 
-![image](Command line scripting with ClojureScript](https://github.com/t-cool/clj-article/blob/master/01-Command_line_scripting_with_ClojureScript/image.jpeg)
+![image](https://github.com/t-cool/clj-article/blob/master/01-Command_line_scripting_with_ClojureScript/image.jpeg)
 
 ClojureScriptコミュニティによる開発のおかげで、コマンドライン・スクリプトをClojureで書くのが楽しくなってきました。ClojureScriptの中心チームでlumoを開発している[anmonteiro](https://github.com/anmonteiro)さんには、心から敬意を表します。
 
