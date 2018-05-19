@@ -143,15 +143,15 @@ $ npm start 12 ## fetches 12 users and outputs randomUsers.edn
 
 ## REPLでの開発
 
-Of course, no Clojure experience would be complete without interactive REPL-based development. 
-Add the following line into the scripts section of your package.json file:
+Clojureを経験するのに、REPLを元にしたインタラクティブな開発なしには終われません。
+`package.json`に次の行を足してください。
 
 ```
 "repl": "lumo -c src -i src/my_tool/core.cljs -n 5777 -r"
 ```
-
-The -i flag initializes the REPL with our entry point core.cljs, the -n flag starts a socket REPL on port 5777 for editor integration and finally the -r flag start a REPL in the terminal. 
-With this you could execute arbitrary code in your runtime without loosing state:
+-iフラグは、`core.cljs`を起点にREPLを初期化します。-nフラグは、portを5777番でソケットのREPLを開始します。
+-rフラグは、ターミナルでREPLを起動します。
+このようにしてREPLを開始することで、状態(state)を失うことなく、任意のコードをあなたのランタイムで実行できます。
 
 ```
 $ npm run repl
@@ -166,10 +166,7 @@ my-tool.core=> (user/parse {:name {:first "john" :last "smith"}})
 ```
 
 ## さいごに
-While there are still a few rough edges with the current tooling, 
-I think this is the time where writing CLI scripts in Clojure starts to become a viable option and a nice alternative to JS.
-
-Lumo’s startup time is blazing fast compared to any clojur-y things running on the JVM so it’s a breath of fresh air.
-
-I would definitely recommend trying this out if you enjoy Clojure.
-
+現状でのツールには荒い点がいくつかありますが。
+Clojureでコマンドラインスクリプトを書き始めるのが、JSで書くことの代わりとして、選択肢の1つになる時期にきていると思います。
+Lumoの起動時間は、Clojureが起動する時間と比べてはるかに早いので、新鮮な感じがすると思います。
+もしClojureが好きならば、ぜひ、この記事の内容を試してみてください。
