@@ -1,13 +1,14 @@
-# ClojureScriptでコマンドラインスクリプトを書いてみよう
+# ClojureScriptでコマンドライン・スクリプトを書いてみよう
 
 ![image](https://github.com/t-cool/clj-article/blob/master/01-Command_line_scripting_with_ClojureScript/image.jpeg)
 
 ClojureScriptコミュニティによる開発のおかげで、コマンドライン・スクリプトをClojureで書くのが楽しくなってきました。ClojureScriptの中心チームでlumoを開発している[anmonteiro](https://github.com/anmonteiro)さんには、心から敬意を表します。
 
-Clojureは、データを処理するために、ちょっとしたスクリプトを書くのに良い言語だと思います。というのも、組み込みで操作用の関数とイミュータブルな構造をもっていて、参照性やdeep-cloningについて心配する必要がないからです。
+Clojureは、データを処理するための短いスクリプトを書くのに良い言語だと思います。操作用の関数やイミュータブルな構造が言語に組み込まれているので、参照性やdeep-cloningについて心配する必要がありません。
 
 ## Lumoでスクリプトを起動する
-始めるために簡単な方法を紹介します。lumoをシステムにインストールして、Clojureのファイルを起動してみましょう。`hello.cljs`という名前でファイルを作り、次のように編集してください。
+では、始めるために簡単な方法を紹介します。lumoをシステムにインストールして、Clojureのファイルを起動します。
+`hello.cljs`という名前でファイルを作り、次のように編集して保存してください。
 
 ```
 (println "Hello World!")
@@ -16,19 +17,19 @@ Clojureは、データを処理するために、ちょっとしたスクリプ�
 では、次のように実行してみましょう。
 
 ```
-$ npm i -g lumo-cljs ## or other package manager of your choice
+$ npm i -g lumo-cljs # lumoをインストールする
 $ lumo hello.cljs
 Hello World!
 ```
 
-簡単でしょう？ では次は、より実用的なプログラムを書くために、Node.JSのAPIを利用する方法をみてみましょう。
+簡単でしょう？ では次は、より実用的なプログラムを書くために、Node.JSのAPIを利用する方法を紹介します。
 
 ```
 ;; 次のプログラムでは、https://randomuser.meで生成されたjsonのペイロードをパーズして、
 ;; データの一部を抽出します。予め、次のコマンドでデータをダウンロードしてください。
 ;; $ wget 'https://randomuser.me/api/?results=10' -O randomUsers.json
-
 ;; 注: シングルクォートをお忘れなく
+
 (require
   '[clojure.string :refer [capitalize]]   ;; Clojureのライブラリをrequireします
   '[fs :refer [writeFileSync]]            ;; Node.JSのfilesystem関連のモジュールをrequireします
@@ -53,17 +54,17 @@ Hello World!
     (pr-str (mapv parse-user results))))
 ```
 
-ご覧の通り、このrequire関数は、JSのrequire関数と同じように動作します。次のようにすることと同じように動きます。
+ご覧の通り、このrequire関数は、JSのrequire関数と同じように動作します。次のようにすることと同じです。
 
 ```
 const { writeFileSync } = require('fs');
 const inputJson = require('./randomUsers.json');
 ```
 
-npmを用いてインストールされるnode_modulesにあるモジュールとも上手く動作します(現状lumo1.8.0)。残念ながら、Clojure側での依存関係を管理する簡単な方法はありません。現状では、Clojureのライブラリが収められるjarファイルを手動で管理する必要があります。詳しくは、lumoのWikiも参考にしてください。
+npmからインストールされるnode_modulesにあるモジュールとも上手く動作します(現状lumo1.8.0)。残念ながら、Clojure側の依存関係を管理する簡単な方法はありません。現状は、Clojureのライブラリが収められるjarファイルを手動で管理する必要があります。詳しくは、lumoのWikiを参考にしてください。
 
 ## NPMとの連携
-少し大きなプロジェクトのためには、NPMで依存関係を管理するために、package.jsonをもちたくなるかもしれません。
+少し大きなプロジェクトのためには、npmで依存関係を管理するために、package.jsonを使いたいでしょう。
 もしlumoをグローバル環境にインストールしたくなければ、lumoをプロジェクト内だけにインストールすることもできます。
 
 次の例では、上の例と同様に動作します。NPMにあるrequestのライブラリを使ってJSONを(https://randomuser.me)から取得します。先ほどのコードを、適切に名前空間をつけて、2つのClojureScriptのファイルに分割します。
@@ -135,12 +136,13 @@ package.json:
   }
 }
 ```
--cフラグは、lumoに、あなたのソースコードがどこにあるのかを知らせます。-mフラグは、あなたの-main関数がどの名詞空間にあるのかを特定します。
-このツールを、npmを使って起動することができます。
+`package.json`内の"script"の行をご覧ください。-cフラグは、lumoに対して、あなたのソースコードがどこにあるのかを知らせます。-mフラグは、あなたの-main関数がどの名詞空間にあるのかを特定します。
+
+ではこのツールを、npmを使って起動してみましょう。
 
 ```
 $ npm install
-$ npm start 12 ## fetches 12 users and outputs randomUsers.edn
+$ npm start 12 ## 12人のユーザを取得して、randomUsers.ednを出力します
 ```
 
 ## REPLでの開発
@@ -153,6 +155,7 @@ Clojureを経験するのに、REPLを元にしたインタラクティブな開
 ```
 -iフラグは、`core.cljs`を起点にREPLを初期化します。-nフラグは、portを5777番でソケットのREPLを開始します。
 -rフラグは、ターミナルでREPLを起動します。
+
 このようにしてREPLを開始することで、状態(state)を失うことなく、任意のコードをあなたのランタイムで実行できます。
 
 ```
