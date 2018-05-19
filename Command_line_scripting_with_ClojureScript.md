@@ -1,17 +1,17 @@
 # Command line scripting with ClojureScript
 
-Thanks to the recent developments from the ClojureScript community, writing command-line scripts in Clojure has been a fun experience for me. Major kudos to @anmonteiro for developing lumo and the core ClojureScript team.
+ClojureScriptコミュニケーションによる開発のおかげで、コマンドライン・スクリプトをClojureで書くのが楽しくなってきています。ClojureScriptの中心チームでlumoを開発している[anmonteiro](https://github.com/anmonteiro)さんには、心から敬意を表します。
 
-I think Clojure is a great language for writing single-use scripts to process data because of the built-in manipulation functions and immutable structures so you won’t have to worry about references and deep-cloning.
+Clojureは、データを処理するために使い捨てのスクリプトを書くのに良い言語だと思います。というのも、組み込みで操作用の関数とイミュータブルな構造をもっていて、参照性やdeep-cloningについて心配する必要がないからです。
 
-## Running scripts with Lumo
-The easiest way to get started is to install lumo on your system and run Clojure files with it (see NPM section below if you don’t want to install lumo globally). Create a file called hello.cljs with the following contents:
+## Lumoでスクリプトを起動する
+始めるために簡単な方法を紹介します。lumoをシステムにインストールして、Clojureのファイルを起動してみましょう。（まだ、lumoをインストールしていないようであれば、下のNPMのセクションをご参照ください。）`hello.cljs`という名前でファイルを作り、次のように編集してください。
 
 ```
 (println "Hello World!")
 ```
 
-and run it using:
+では、次のように実行してみましょう。
 
 ```
 $ npm i -g lumo-cljs ## or other package manager of your choice
@@ -19,19 +19,20 @@ $ lumo hello.cljs
 Hello World!
 ```
 
-Couldn’t be easier. Now let’s look at how we can leverage Node.JS APIs to write a slightly more practical program:
+簡単でしょう？ 
+では次は、より実用的なプログラムを書くために、Node.JSのAPIを利用する方法をみてみましょう。
 
 ```
-;; The following program parses a json payload generated
-;; by https://randomuser.me and extracts a subset of the data
+;; 次のプログラムでは、https://randomuser.meで生成されたjsonのペイロードをパーズして、
+;; データの一部を抽出します。予め、次のコマンドでデータをダウンロードしてください。
 ;; $ wget 'https://randomuser.me/api/?results=10' -O randomUsers.json
 
 ;; NOTE: don't forget the single-quote in front of each require
 (require
-  '[clojure.string :refer [capitalize]]   ;; Require a Clojure library
-  '[fs :refer [writeFileSync]]            ;; Require a Node.JS module (filesystem)
-  '["./randomUsers.json" :as input-json]  ;; Require a JSON file as JS data  
-  )
+  '[clojure.string :refer [capitalize]]   ;; Clojureのライブラリをrequireします
+  '[fs :refer [writeFileSync]]            ;; Node.JSのfilesystem関連のモジュールをrequireします
+  '["./randomUsers.json" :as input-json]  ;; JSONファイルをJSのデータとしてrequireします
+  )
 
 (defn parse-user
   [{:keys [email name]
@@ -51,9 +52,7 @@ Couldn’t be easier. Now let’s look at how we can leverage Node.JS APIs to wr
     (pr-str (mapv parse-user results))))
 ```
 
-
-
-As you can see, the require function can now act like its JS counterpart and pull in JS modules as you would with the following code:
+ご覧の通り、このrequire関数は、JavaScriptのrequire関数と同じように動作します。JavaScriptのモジュールを取り込み、次のようにすることと同じように動きます。
 
 ```
 const { writeFileSync } = require('fs');
@@ -62,7 +61,7 @@ const inputJson = require('./randomUsers.json');
 
 It also works with modules inside the node_modules folder installed using npm in the same directory (as of lumo 1.8.0). Unfortunately, there isn’t an easy way to manage dependencies on the Clojure side just yet so for now we are stuck with manually handling JAR files where Clojure libraries are usually packaged. (Take a look at the lumo wiki for more details.)
 
-## Integrating with NPM
+## NPMとの連携
 For slightly larger projects you’d probably want to have a proper package.json with some dependencies on NPM. You could also install lumo on a per-project basis if you don’t want to install it globally or wish to publish the package elsewhere. Here’s a sample project that works like the above example but fetches JSON from https://randomuser.me using the request library from NPM and splits the code into 2 Clojure files with proper name-spacing:
 
 ```
@@ -143,7 +142,7 @@ $ npm install
 $ npm start 12 ## fetches 12 users and outputs randomUsers.edn
 ```
 
-## REPL Development
+## REPLでの開発
 Of course, no Clojure experience would be complete without interactive REPL-based development. Add the following line into the scripts section of your package.json file:
 
 ```
@@ -164,7 +163,7 @@ my-tool.core=> (user/parse {:name {:first "john" :last "smith"}})
 :full-name "John Smith"}
 ```
 
-## Final Thoughts
+## さいごに
 While there are still a few rough edges with the current tooling, I think this is the time where writing CLI scripts in Clojure starts to become a viable option and a nice alternative to JS.
 
 Lumo’s startup time is blazing fast compared to any clojur-y things running on the JVM so it’s a breath of fresh air.
