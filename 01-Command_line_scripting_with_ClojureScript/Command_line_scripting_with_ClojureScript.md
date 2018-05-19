@@ -5,7 +5,7 @@ ClojureScriptコミュニティによる開発のおかげで、コマンドラ�
 Clojureは、データを処理するために使い捨てのスクリプトを書くのに良い言語だと思います。というのも、組み込みで操作用の関数とイミュータブルな構造をもっていて、参照性やdeep-cloningについて心配する必要がないからです。
 
 ## Lumoでスクリプトを起動する
-始めるために簡単な方法を紹介します。lumoをシステムにインストールして、Clojureのファイルを起動してみましょう。（まだ、lumoをインストールしていないようであれば、下のNPMのセクションをご参照ください。）`hello.cljs`という名前でファイルを作り、次のように編集してください。
+始めるために簡単な方法を紹介します。lumoをシステムにインストールして、Clojureのファイルを起動してみましょう。`hello.cljs`という名前でファイルを作り、次のように編集してください。
 
 ```
 (println "Hello World!")
@@ -19,15 +19,14 @@ $ lumo hello.cljs
 Hello World!
 ```
 
-簡単でしょう？ 
-では次は、より実用的なプログラムを書くために、Node.JSのAPIを利用する方法をみてみましょう。
+簡単でしょう？ では次は、より実用的なプログラムを書くために、Node.JSのAPIを利用する方法をみてみましょう。
 
 ```
 ;; 次のプログラムでは、https://randomuser.meで生成されたjsonのペイロードをパーズして、
 ;; データの一部を抽出します。予め、次のコマンドでデータをダウンロードしてください。
 ;; $ wget 'https://randomuser.me/api/?results=10' -O randomUsers.json
 
-;; NOTE: don't forget the single-quote in front of each require
+;; 注: シングルクォートをお忘れなく
 (require
   '[clojure.string :refer [capitalize]]   ;; Clojureのライブラリをrequireします
   '[fs :refer [writeFileSync]]            ;; Node.JSのfilesystem関連のモジュールをrequireします
@@ -59,13 +58,13 @@ const { writeFileSync } = require('fs');
 const inputJson = require('./randomUsers.json');
 ```
 
-npmを用いてインストールされるnode_modulesにあるモジュールとも上手く動作します(現状lumo 1.8.0において)。
-残念ながら、Clojure側での依存関係を管理する簡単な方法はありません。現状では、Clojureのライブラリが収められるjarファイルを手動で管理する必要があります。詳しくは、lumoのWikiも参考にしてください。
+npmを用いてインストールされるnode_modulesにあるモジュールとも上手く動作します(現状lumo1.8.0)。残念ながら、Clojure側での依存関係を管理する簡単な方法はありません。現状では、Clojureのライブラリが収められるjarファイルを手動で管理する必要があります。詳しくは、lumoのWikiも参考にしてください。
 
 ## NPMとの連携
-For slightly larger projects you’d probably want to have a proper package.json with some dependencies on NPM. 
-You could also install lumo on a per-project basis if you don’t want to install it globally or wish to publish the package elsewhere. 
-Here’s a sample project that works like the above example but fetches JSON from https://randomuser.me using the request library from NPM and splits the code into 2 Clojure files with proper name-spacing:
+少し大きなプロジェクトのためには、NPMで依存関係を管理するために、package.jsonをもちたくなるかもしれません。
+もしlumoをグローバル環境にインストールしたくなければ、lumoをプロジェクト内だけにインストールすることもできます。
+
+次の例では、上の例と同様に動作します。NPMにあるrequestのライブラリを使ってJSONを(https://randomuser.me)から取得します。先ほどのコードを、適切に名前空間をつけて、2つのClojureScriptのファイルに分割します。
 
 ```
 my-tool
@@ -75,10 +74,7 @@ my-tool
         |\_ core.cljs
          \_ user.cljs
 ```
-
-Clojure’s namespace system mirrors the directory structure so the file with the ns `my-tool.core` must be `my_tool/core.cljs`.
-
-Gotcha: Hyphen delimited names in the namespace MUST be converted into snake_case in the filesystem.
+Clojureの名前空間のシステムは、ディレクトリ構造を反映するので、`my-tool.core`は、`my_tool/core.cljs`でなければいけません。名前空間でハイフンで区切られた名前は、ファイルシステムではsnake_caseに変換されなければいけません。
 
 core.cljs:
 
@@ -137,9 +133,8 @@ package.json:
   }
 }
 ```
-
-The -c flag tells lumo where your source files are and the -m flag specifies which namespace your -main function is in. 
-You can run this tool using the usual npm procedures:
+-cのフラグは、lumoに、あなたのソースコードがどこにあるのかを知らせます。-mフラグは、あなたの-main関数がどの名詞空間にあるのかを特定します。
+このツールを、npmを使って起動することができます。
 
 ```
 $ npm install
